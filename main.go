@@ -8,11 +8,6 @@ import (
 	"time"
 )
 
-type App struct {
-	Name string
-	PID  int
-}
-
 var (
 	appChan = make(chan App)
 )
@@ -63,7 +58,7 @@ func main() {
 		for {
 			select {
 			case app := <-appChan:
-				log.Printf("%5d - %s\n", app.PID, app.Name)
+				log.Printf("%5d - %-15s - %s\n", app.PID, app.ProcessName(), app.Name)
 			}
 		}
 	}()
