@@ -1,12 +1,11 @@
 package main
 
 import (
-	"log"
-	"time"
-
 	"github.com/BurntSushi/xgbutil"
 	"github.com/BurntSushi/xgbutil/ewmh"
 	"github.com/BurntSushi/xgbutil/icccm"
+	"log"
+	"time"
 )
 
 type App struct {
@@ -41,7 +40,6 @@ func activeWindow(X *xgbutil.XUtil) (app App) {
 }
 
 func sendNewNames(X *xgbutil.XUtil) {
-	log.Println("sendNewNames")
 	var lastName string
 	for {
 		app := activeWindow(X)
@@ -54,19 +52,14 @@ func sendNewNames(X *xgbutil.XUtil) {
 }
 
 func main() {
-	// Connect to the X server using the DISPLAY environment variable.
 	X, err := xgbutil.NewConn()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// See if it works
-	//log.Println(activeWindow(X).Name)
-
 	go sendNewNames(X)
 
 	go func() {
-		log.Println("go func()")
 		for {
 			select {
 			case app := <-appChan:
