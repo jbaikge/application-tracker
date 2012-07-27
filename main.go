@@ -12,7 +12,7 @@ var (
 	appChan = make(chan App)
 )
 
-func activeApp(X *xgbutil.XUtil) (app App) {
+func getActiveApp(X *xgbutil.XUtil) (app App) {
 	active, err := ewmh.ActiveWindowGet(X)
 	if err != nil {
 		log.Fatal(err)
@@ -37,7 +37,7 @@ func activeApp(X *xgbutil.XUtil) (app App) {
 func sendNewNames(X *xgbutil.XUtil) {
 	var lastName string
 	for {
-		app := activeApp(X)
+		app := getActiveApp(X)
 		if app.Name != lastName {
 			appChan <- app
 		}
